@@ -4,6 +4,7 @@ import com.skypro.employee.model.Employee;
 import com.skypro.employee.record.EmployeeRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,10 +62,12 @@ public class EmployeeService {
     }
 
     public int getHighSalary() {
+        System.out.println();
         return employees
                 .values()
                 .stream()
                 .mapToInt(Employee::getSalary)
                 .filter(e -> e > getAverageValue()).sum();
+
     }
 }
