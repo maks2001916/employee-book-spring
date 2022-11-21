@@ -46,7 +46,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/high-salary")
-    public int getHighSalary() {
+    public Employee getHighSalary() {
         return this.employeeService.getHighSalary();
     }
 }

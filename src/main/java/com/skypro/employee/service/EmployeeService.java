@@ -59,12 +59,11 @@ public class EmployeeService {
                 .orElseThrow(() -> new EmployeeNotFoundException("Something went wrong"));
     }
 
-    public int getHighSalary() {
+    public Employee getHighSalary() {
         int avg = getAverageValue();
         return employees
                 .values()
                 .stream()
-                .filter(e -> e.getSalary() > avg)
-                .mapToInt(e -> e.getSalary());
+                .filter(e -> e.getSalary() > avg);
     }
 }
