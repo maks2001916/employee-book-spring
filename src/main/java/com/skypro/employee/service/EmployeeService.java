@@ -1,13 +1,11 @@
 package com.skypro.employee.service;
 
+import com.skypro.employee.exception.EmployeeNotFoundException;
 import com.skypro.employee.model.Employee;
 import com.skypro.employee.record.EmployeeRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class EmployeeService {
@@ -19,7 +17,7 @@ public class EmployeeService {
 
     public Map<Integer, Employee> addEmployee(EmployeeRequest employeeRequest) {
         if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
-            throw new IllegalArgumentException("Empliyee name should be set");
+            throw new IllegalArgumentException("Employee name should be set");
         }
         Employee employee = new Employee(employeeRequest.getFirstName(),
                 employeeRequest.getLastName(),
@@ -30,7 +28,9 @@ public class EmployeeService {
     }
 
     public int getSalarySum() {
-        return employees.values().stream()
+        return employees
+                .values()
+                .stream()
                 .mapToInt(Employee::getSalary)
                 .sum();
     }
@@ -43,31 +43,28 @@ public class EmployeeService {
         return employees.values().stream().mapToInt(Employee::getSalary).sum() / getSalaryWolume();
     }
 
-    public int getSalaryMin() {
+    public Employee getSalaryMin() throws EmployeeNotFoundException {
         return employees
                 .values()
                 .stream()
-                .mapToInt(Employee::getSalary)
-                .min()
-                .orElseThrow(( ) -> new RuntimeException("Something went wrong"));
+                .min(Comparator.comparingInt(e -> e.getSalary()))
+                .orElseThrow(( ) -> new EmployeeNotFoundException("Something went wrong"));
     }
 
-    public int getSalaryMax() {
+    public Employee getSalaryMax() throws EmployeeNotFoundException {
         return employees
                 .values()
                 .stream()
-                .mapToInt(Employee::getSalary)
-                .max()
-                .orElseThrow(() -> new RuntimeException("Something went wrong"));
+                .max(Comparator.comparingInt(e -> e.getSalary()))
+                .orElseThrow(() -> new EmployeeNotFoundException("Something went wrong"));
     }
 
     public int getHighSalary() {
-        System.out.println();
+        int avg = getAverageValue();
         return employees
                 .values()
                 .stream()
-                .mapToInt(Employee::getSalary)
-                .filter(e -> e > getAverageValue()).sum();
-
+                .filter(e -> e.getSalary() > avg)
+                .mapToInt(e -> e.getSalary());
     }
 }

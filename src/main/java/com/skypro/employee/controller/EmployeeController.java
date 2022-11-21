@@ -1,5 +1,6 @@
 package com.skypro.employee.controller;
 
+import com.skypro.employee.exception.EmployeeNotFoundException;
 import com.skypro.employee.model.Employee;
 import com.skypro.employee.record.EmployeeRequest;
 import com.skypro.employee.service.EmployeeService;
@@ -35,12 +36,12 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/salaty/max")
-    public int getSalaryMax() {
+    public Employee getSalaryMax() throws EmployeeNotFoundException {
         return this.employeeService.getSalaryMax();
     }
 
     @GetMapping("/employees/salary/min")
-    public int getSalaryMin() {
+    public Employee getSalaryMin() throws EmployeeNotFoundException {
         return this.employeeService.getSalaryMin();
     }
 
