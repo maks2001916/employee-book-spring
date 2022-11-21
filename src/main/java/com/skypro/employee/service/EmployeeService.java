@@ -6,6 +6,7 @@ import com.skypro.employee.record.EmployeeRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -59,11 +60,12 @@ public class EmployeeService {
                 .orElseThrow(() -> new EmployeeNotFoundException("Something went wrong"));
     }
 
-    public Employee getHighSalary() {
+    public List<Employee> getHighSalary() {
         int avg = getAverageValue();
         return employees
                 .values()
                 .stream()
-                .filter(e -> e.getSalary() > avg);
+                .filter(e -> e.getSalary() > avg)
+                .collect(Collectors.toList());
     }
 }
