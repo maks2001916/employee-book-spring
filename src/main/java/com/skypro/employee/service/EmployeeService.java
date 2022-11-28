@@ -12,10 +12,6 @@ import java.util.stream.Collectors;
 public class EmployeeService {
     private final Map<Integer, Employee> employees = new HashMap<>();
 
-    public Collection<Employee> getAllEmploees() {
-        return this.employees.values();
-    }
-
     public Map<Integer, Employee> addEmployee(EmployeeRequest employeeRequest) {
         if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
             throw new IllegalArgumentException("Employee name should be set");
@@ -26,6 +22,14 @@ public class EmployeeService {
                 employeeRequest.getSalary());
         this.employees.put(employee.getId(), employee);
         return employees;
+    }
+
+    public List<Employee> getEmployees() {
+        return new ArrayList<Employee>(this.employees.values());
+    }
+
+    public Collection<Employee> getQuantityEmployees() {
+        return this.employees.values();
     }
 
     public int getSalarySum() {
