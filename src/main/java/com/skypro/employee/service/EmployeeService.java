@@ -24,6 +24,10 @@ public class EmployeeService {
         return employees;
     }
 
+    public Employee getEmployee(int id) {
+        return employees.get(id);
+    }
+
     public List<Employee> getEmployees() {
         return new ArrayList<Employee>(this.employees.values());
     }

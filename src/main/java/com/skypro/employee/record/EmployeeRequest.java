@@ -5,6 +5,15 @@ public class EmployeeRequest {
     private String lastName;
     private int departament;
     private int salary;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
