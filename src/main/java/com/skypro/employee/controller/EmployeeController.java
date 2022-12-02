@@ -1,5 +1,6 @@
 package com.skypro.employee.controller;
 
+import com.skypro.employee.exception.EmployeeNotFoundException;
 import com.skypro.employee.model.Employee;
 import com.skypro.employee.record.EmployeeRequest;
 import com.skypro.employee.service.EmployeeService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 public class EmployeeController {
@@ -21,7 +23,7 @@ public class EmployeeController {
 
     @GetMapping("/employees")
     public Collection<Employee> getAllEmployes() {
-        return this.employeeService.getAllEmploees();
+        return this.employeeService.getQuantityEmployees();
     }
 
     @PostMapping("/employees")
@@ -35,17 +37,17 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/salaty/max")
-    public int getSalaryMax() {
+    public Employee getSalaryMax() throws EmployeeNotFoundException {
         return this.employeeService.getSalaryMax();
     }
 
     @GetMapping("/employees/salary/min")
-    public int getSalaryMin() {
+    public Employee getSalaryMin() throws EmployeeNotFoundException {
         return this.employeeService.getSalaryMin();
     }
 
     @GetMapping("/employees/high-salary")
-    public int getHighSalary() {
+    public List<Employee> getHighSalary() {
         return this.employeeService.getHighSalary();
     }
 }
