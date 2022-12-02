@@ -48,7 +48,7 @@ public class EmployeeServiceTests {
 
 
     @Test
-    public void geleteNotEmployee() {
+    public void deleteNotEmployee() {
         Assertions.assertEquals(employee1, employeeService.getEmployee(employee1.getId()));
         Assertions.assertEquals(employee2, employeeService.getEmployee(employee2.getId()));
     }
