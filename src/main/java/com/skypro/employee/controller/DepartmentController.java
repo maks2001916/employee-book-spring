@@ -38,7 +38,7 @@ public class DepartmentController {
 
     @GetMapping("/department/employees/grouped")
     public Map<Integer, List<Employee>> getEmployeesDepartment() {
-        return this.departmentService.employeesOfDepartment();
+        return this.departmentService.employeesOfDepartmentReceiving();
     }
 
 }

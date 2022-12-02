@@ -55,7 +55,7 @@ public class DepartmentService {
         return minSalary;
     }
 
-    public Map<Integer, List<Employee>> employeesOfDepartment() {
+    public Map<Integer, List<Employee>> employeesOfDepartmentReceiving() {
         Map<Integer, List<Employee>> listEmployees = new HashMap<>();
         List<Employee> employees = new ArrayList<>();
         for (Employee employee : this.employeeService.getEmployees()) {
