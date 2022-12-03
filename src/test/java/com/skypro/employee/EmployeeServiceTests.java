@@ -2,7 +2,6 @@ package com.skypro.employee;
 
 import com.skypro.employee.controller.EmployeeController;
 import com.skypro.employee.model.Employee;
-import com.skypro.employee.record.EmployeeRequest;
 import com.skypro.employee.service.EmployeeService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,22 +18,11 @@ import java.util.stream.Stream;
 public class EmployeeServiceTests {
 
     public final EmployeeService employeeService = new EmployeeService();
-    EmployeeRequest employee1 = new EmployeeRequest();
-    EmployeeRequest employee2 = new EmployeeRequest();
+    Employee employee1 = new Employee("name1", "lastName1", 1, 124354);
+    Employee employee2 = new Employee("name2", "lastName2", 2, 123615);
 
     @BeforeEach
     public void addEmployee() {
-        employee1.setLastName("Name1");
-        employee1.setFirstName("firstName1");
-        employee1.setDepartament(1);
-        employee1.setSalary(1234);
-        employee1.setId(1);
-
-        employee2.setLastName("name2");
-        employee2.setFirstName("firstName2");
-        employee2.setDepartament(2);
-        employee2.setSalary(12345);
-        employee2.setId(2);
 
         employeeService.addEmployee(employee1);
         employeeService.addEmployee(employee2);
@@ -49,8 +37,8 @@ public class EmployeeServiceTests {
 
     @Test
     public void deleteNotEmployee() {
-        Assertions.assertEquals(employee1, employeeService.getEmployee(employee1.getId()));
-        Assertions.assertEquals(employee2, employeeService.getEmployee(employee2.getId()));
+        Assertions.assertEquals(employee1, employeeService.getEmployee(employee1.getDapartament()));
+        Assertions.assertEquals(employee2, employeeService.getEmployee(employee2.getDapartament()));
     }
 
     @Test

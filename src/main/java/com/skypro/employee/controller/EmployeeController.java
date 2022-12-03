@@ -2,7 +2,6 @@ package com.skypro.employee.controller;
 
 import com.skypro.employee.exception.EmployeeNotFoundException;
 import com.skypro.employee.model.Employee;
-import com.skypro.employee.record.EmployeeRequest;
 import com.skypro.employee.service.EmployeeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,11 +22,11 @@ public class EmployeeController {
 
     @GetMapping("/employees")
     public Collection<Employee> getAllEmployes() {
-        return this.employeeService.getQuantityEmployees();
+        return this.employeeService.getEmployees();
     }
 
     @PostMapping("/employees")
-    public Employee createEmployee(@RequestBody EmployeeRequest employeeRequest) {
+    public Employee createEmployee(@RequestBody Employee employeeRequest) {
         return (Employee) this.employeeService.addEmployee(employeeRequest);
     }
 
@@ -37,17 +36,17 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/salaty/max")
-    public Employee getSalaryMax() throws EmployeeNotFoundException {
+    public int getSalaryMax() throws EmployeeNotFoundException {
         return this.employeeService.getSalaryMax();
     }
 
     @GetMapping("/employees/salary/min")
-    public Employee getSalaryMin() throws EmployeeNotFoundException {
+    public int getSalaryMin() throws EmployeeNotFoundException {
         return this.employeeService.getSalaryMin();
     }
 
     @GetMapping("/employees/high-salary")
-    public List<Employee> getHighSalary() {
+    public int getHighSalary() {
         return this.employeeService.getHighSalary();
     }
 }

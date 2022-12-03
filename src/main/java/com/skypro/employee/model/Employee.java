@@ -6,7 +6,6 @@ import org.springframework.util.StringUtils;
 
 public class Employee {
     private static int counter;
-    private int id;
     private String firstName;
     private String lastName;
     private int dapartament;
@@ -29,7 +28,6 @@ public class Employee {
         this.dapartament = dapartament;
         this.salary = salary;
 
-        this.id = counter++;
     }
 
     public ResponseEntity.BodyBuilder badRequest() {
@@ -38,10 +36,6 @@ public class Employee {
 
     public static int getCounter() {
         return counter;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getFirstName() {
@@ -63,7 +57,6 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", dapartament=" + dapartament +

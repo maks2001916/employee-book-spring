@@ -1,45 +1,42 @@
 package com.skypro.employee.service;
 
-import com.skypro.employee.exception.EmployeeNotFoundException;
 import com.skypro.employee.model.Employee;
-import com.skypro.employee.record.EmployeeRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
     private final Map<Integer, Employee> employees = new HashMap<>();
-
-    public Map<Integer, Employee> addEmployee(EmployeeRequest employeeRequest) {
+    private List<Employee> employeeList = new ArrayList<>();
+    public Collection<Employee> getAllEmploees() {
+        return this.employees.values();
+    }
+    private int counter = 0;
+    public Map<Integer, Employee> addEmployee(Employee employeeRequest) {
         if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
-            throw new IllegalArgumentException("Employee name should be set");
+            throw new IllegalArgumentException("Empliyee name should be set");
         }
         Employee employee = new Employee(employeeRequest.getFirstName(),
                 employeeRequest.getLastName(),
-                employeeRequest.getDepartament(),
+                employeeRequest.getDapartament(),
                 employeeRequest.getSalary());
-        this.employees.put(employee.getId(), employee);
+        this.employees.put(counter, employee);
+        employeeList.add(employee);
+        counter++;
         return employees;
     }
 
-    public Employee getEmployee(int id) {
-        return employees.get(id);
-    }
-
     public List<Employee> getEmployees() {
-        return new ArrayList<Employee>(this.employees.values());
+        return employeeList;
     }
 
-    public Collection<Employee> getQuantityEmployees() {
-        return this.employees.values();
+    public Employee getEmployee(int department) {
+        return employees.get(department);
     }
 
     public int getSalarySum() {
-        return employees
-                .values()
-                .stream()
+        return employees.values().stream()
                 .mapToInt(Employee::getSalary)
                 .sum();
     }
@@ -52,28 +49,31 @@ public class EmployeeService {
         return employees.values().stream().mapToInt(Employee::getSalary).sum() / getSalaryWolume();
     }
 
-    public Employee getSalaryMin() throws EmployeeNotFoundException {
+    public int getSalaryMin() {
         return employees
                 .values()
                 .stream()
-                .min(Comparator.comparingInt(e -> e.getSalary()))
-                .orElseThrow(( ) -> new EmployeeNotFoundException("Something went wrong"));
+                .mapToInt(Employee::getSalary)
+                .min()
+                .orElseThrow(( ) -> new RuntimeException("Something went wrong"));
     }
 
-    public Employee getSalaryMax() throws EmployeeNotFoundException {
+    public int getSalaryMax() {
         return employees
                 .values()
                 .stream()
-                .max(Comparator.comparingInt(e -> e.getSalary()))
-                .orElseThrow(() -> new EmployeeNotFoundException("Something went wrong"));
+                .mapToInt(Employee::getSalary)
+                .max()
+                .orElseThrow(() -> new RuntimeException("Something went wrong"));
     }
 
-    public List<Employee> getHighSalary() {
-        int avg = getAverageValue();
+    public int getHighSalary() {
+        System.out.println();
         return employees
                 .values()
                 .stream()
-                .filter(e -> e.getSalary() > avg)
-                .collect(Collectors.toList());
+                .mapToInt(Employee::getSalary)
+                .filter(e -> e > getAverageValue()).sum();
+
     }
 }
