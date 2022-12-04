@@ -12,13 +12,13 @@ public class Employee {
     private int salary;
 
     public Employee(String firstName, String lastName, int dapartament, int salary) {
-        if (StringUtils.isEmpty(firstName)) {
+        if (!StringUtils.isEmpty(firstName)) {
             firstName = StringUtils.capitalize(firstName);
             this.firstName = firstName;
         } else {
             badRequest();
         }
-        if (StringUtils.isEmpty(lastName)) {
+        if (!StringUtils.isEmpty(lastName)) {
             lastName = StringUtils.capitalize(lastName);
             this.lastName = lastName;
         } else {
