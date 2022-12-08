@@ -20,17 +20,14 @@ public class EmployeeServiceTests {
     public EmployeeService employeeService;
     Employee employee1 = new Employee("name1", "lastName1", 1, 124354);
     Employee employee2 = new Employee("name2", "lastName2", 2, 123615);
-    int maxSalary = 0;
-    int minSalary = 0;
-    int highSalary = 0;
+    int maxSalary = employeeService.getSalaryMax();
+    int minSalary = employeeService.getSalaryMin();
+    int highSalary = employeeService.getHighSalary();
     @BeforeEach
     public void addEmployee() {
         this.employeeService = new EmployeeService();
         employeeService.addEmployee(employee1);
         employeeService.addEmployee(employee2);
-        maxSalary = employeeService.getSalaryMax();
-        minSalary = employeeService.getSalaryMin();
-        highSalary = employeeService.getHighSalary();
     }
 
     @Test

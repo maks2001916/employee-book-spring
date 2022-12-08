@@ -7,28 +7,20 @@ import java.util.*;
 
 @Service
 public class EmployeeService {
-    private final Map<Integer, Employee> employees = new HashMap<>();
-    private List<Employee> employeeList = new ArrayList<>();
-    public Collection<Employee> getAllEmploees() {
-        return this.employees.values();
+    private final List<Employee> employees = new ArrayList<>();
+    public int getAllEmploees() {
+        return this.employees.size();
     }
-    private int counter = 0;
-    public Map<Integer, Employee> addEmployee(Employee employeeRequest) {
-        if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
+    public Employee addEmployee(Employee employee) {
+        if (employee.getFirstName() == null || employee.getLastName() == null) {
             throw new IllegalArgumentException("Empliyee name should be set");
         }
-        Employee employee = new Employee(employeeRequest.getFirstName(),
-                employeeRequest.getLastName(),
-                employeeRequest.getDapartament(),
-                employeeRequest.getSalary());
-        this.employees.put(counter, employee);
-        employeeList.add(employee);
-        counter++;
-        return employees;
+        this.employees.add(employee);
+        return employee;
     }
 
     public List<Employee> getEmployees() {
-        return employeeList;
+        return this.employees;
     }
 
     public Employee getEmployee(int department) {
@@ -36,7 +28,8 @@ public class EmployeeService {
     }
 
     public int getSalarySum() {
-        return employees.values().stream()
+        return employees
+                .stream()
                 .mapToInt(Employee::getSalary)
                 .sum();
     }
@@ -46,12 +39,11 @@ public class EmployeeService {
     }
 
     public int getAverageValue() {
-        return employees.values().stream().mapToInt(Employee::getSalary).sum() / getSalaryWolume();
+        return employees.stream().mapToInt(Employee::getSalary).sum() / getSalaryWolume();
     }
 
     public int getSalaryMin() {
         return employees
-                .values()
                 .stream()
                 .mapToInt(Employee::getSalary)
                 .min()
@@ -60,7 +52,6 @@ public class EmployeeService {
 
     public int getSalaryMax() {
         return employees
-                .values()
                 .stream()
                 .mapToInt(Employee::getSalary)
                 .max()
@@ -70,7 +61,6 @@ public class EmployeeService {
     public int getHighSalary() {
         System.out.println();
         return employees
-                .values()
                 .stream()
                 .mapToInt(Employee::getSalary)
                 .filter(e -> e > getAverageValue()).sum();
