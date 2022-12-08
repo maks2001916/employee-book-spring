@@ -1,28 +1,41 @@
 package com.skypro.employee.model;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
+
 public class Employee {
     private static int counter;
-    private final int id;
-    private final String firstName;
-    private final String lastName;
-    private final int dapartament;
-    private final int salary;
+    private String firstName;
+    private String lastName;
+    private int dapartament;
+    private int salary;
 
     public Employee(String firstName, String lastName, int dapartament, int salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        if (!StringUtils.isEmpty(firstName)) {
+            firstName = StringUtils.capitalize(firstName);
+            this.firstName = firstName;
+        } else {
+            badRequest();
+        }
+        if (!StringUtils.isEmpty(lastName)) {
+            lastName = StringUtils.capitalize(lastName);
+            this.lastName = lastName;
+        } else {
+            badRequest();
+        }
+
         this.dapartament = dapartament;
         this.salary = salary;
 
-        this.id = counter++;
+    }
+
+    public ResponseEntity.BodyBuilder badRequest() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST);
     }
 
     public static int getCounter() {
         return counter;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getFirstName() {
@@ -44,7 +57,6 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", dapartament=" + dapartament +

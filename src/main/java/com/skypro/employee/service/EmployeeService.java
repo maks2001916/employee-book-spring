@@ -1,35 +1,35 @@
 package com.skypro.employee.service;
 
 import com.skypro.employee.model.Employee;
-import com.skypro.employee.record.EmployeeRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class EmployeeService {
-    private final Map<Integer, Employee> employees = new HashMap<>();
-
-    public Collection<Employee> getAllEmploees() {
-        return this.employees.values();
+    private final List<Employee> employees = new ArrayList<>();
+    public int getAllEmploees() {
+        return this.employees.size();
     }
-
-    public Map<Integer, Employee> addEmployee(EmployeeRequest employeeRequest) {
-        if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
+    public Employee addEmployee(Employee employee) {
+        if (employee.getFirstName() == null || employee.getLastName() == null) {
             throw new IllegalArgumentException("Empliyee name should be set");
         }
-        Employee employee = new Employee(employeeRequest.getFirstName(),
-                employeeRequest.getLastName(),
-                employeeRequest.getDepartament(),
-                employeeRequest.getSalary());
-        this.employees.put(employee.getId(), employee);
-        return employees;
+        this.employees.add(employee);
+        return employee;
+    }
+
+    public List<Employee> getEmployees() {
+        return this.employees;
+    }
+
+    public Employee getEmployee(int department) {
+        return employees.get(department);
     }
 
     public int getSalarySum() {
-        return employees.values().stream()
+        return employees
+                .stream()
                 .mapToInt(Employee::getSalary)
                 .sum();
     }
@@ -39,12 +39,11 @@ public class EmployeeService {
     }
 
     public int getAverageValue() {
-        return employees.values().stream().mapToInt(Employee::getSalary).sum() / getSalaryWolume();
+        return employees.stream().mapToInt(Employee::getSalary).sum() / getSalaryWolume();
     }
 
     public int getSalaryMin() {
         return employees
-                .values()
                 .stream()
                 .mapToInt(Employee::getSalary)
                 .min()
@@ -53,7 +52,6 @@ public class EmployeeService {
 
     public int getSalaryMax() {
         return employees
-                .values()
                 .stream()
                 .mapToInt(Employee::getSalary)
                 .max()
@@ -61,10 +59,11 @@ public class EmployeeService {
     }
 
     public int getHighSalary() {
+        System.out.println();
         return employees
-                .values()
                 .stream()
                 .mapToInt(Employee::getSalary)
                 .filter(e -> e > getAverageValue()).sum();
+
     }
 }
